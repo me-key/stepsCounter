@@ -30,6 +30,10 @@ class AppStrings {
   static const String customRewardMenuKey = 'customRewardMenu';
   static const String debugModeLabelKey = 'debugModeLabel';
   static const String permissionDeniedKey = 'permissionDenied';
+  static const String passwordDialogTitleKey = 'passwordDialogTitle';
+  static const String passwordInputLabelKey = 'passwordInputLabel';
+  static const String passwordErrorKey = 'passwordError';
+  static const String submitBtnKey = 'submitBtn';
   static const String pedometerErrorPrefixKey = 'pedometerErrorPrefix';
 
   // Getters
@@ -54,11 +58,16 @@ class AppStrings {
   static String get permissionDenied => get(permissionDeniedKey);
   static String pedometerError(dynamic error) => '${get(pedometerErrorPrefixKey)}: $error';
 
+  static String get passwordDialogTitle => get(passwordDialogTitleKey);
+  static String get passwordInputLabel => get(passwordInputLabelKey);
+  static String get passwordError => get(passwordErrorKey);
+  static String get submitBtn => get(submitBtnKey);
+
   static const String defaultRewardImageUrl = 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80&w=1000';
 
   static const Map<String, String> _english = {
     appTitleKey: 'Step Goal Reward',
-    dailyGoalLabelKey: 'Daily Goal: ',
+    dailyGoalLabelKey: 'Weekly Goal: ',
     unlockRewardTitleKey: 'Unlock Your Reward',
     stepsLabelKey: 'Steps',
     progressTitleKey: 'Your Progress',
@@ -74,11 +83,15 @@ class AppStrings {
     debugModeLabelKey: 'Debug Mode',
     permissionDeniedKey: 'Permission denied',
     pedometerErrorPrefixKey: 'Pedometer Error',
+    passwordDialogTitleKey: 'Settings Protection',
+    passwordInputLabelKey: 'Enter Password',
+    passwordErrorKey: 'Incorrect password!',
+    submitBtnKey: 'Submit',
   };
 
   static const Map<String, String> _hebrew = {
     appTitleKey: 'פרס יעד צעדים',
-    dailyGoalLabelKey: 'יעד יומי: ',
+    dailyGoalLabelKey: 'יעד שבועי: ',
     unlockRewardTitleKey: 'פתח את הפרס שלך',
     stepsLabelKey: 'צעדים',
     progressTitleKey: 'ההתקדמות שלך',
@@ -94,5 +107,9 @@ class AppStrings {
     debugModeLabelKey: 'מצב פיתוח',
     permissionDeniedKey: 'ההרשאה נדחתה',
     pedometerErrorPrefixKey: 'שגיאת מד צעדים',
+    passwordDialogTitleKey: 'הגנת הגדרות',
+    passwordInputLabelKey: 'הזן סיסמה',
+    passwordErrorKey: 'סיסמה שגויה!',
+    submitBtnKey: 'אישור',
   };
 }

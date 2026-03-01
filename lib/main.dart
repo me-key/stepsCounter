@@ -215,8 +215,56 @@ class _StepTrackerScreenState extends State<StepTrackerScreen> {
     );
   }
 
+  void _showPasswordDialog(VoidCallback onSuccess) {
+    final TextEditingController controller = TextEditingController();
+    bool showError = false;
+
+    showDialog(
+      context: context,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setDialogState) => AlertDialog(
+          title: Text(AppStrings.passwordDialogTitle),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: controller,
+                obscureText: true,
+                decoration: InputDecoration(
+                  labelText: AppStrings.passwordInputLabel,
+                  errorText: showError ? AppStrings.passwordError : null,
+                  border: const OutlineInputBorder(),
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text(AppStrings.cancelBtn),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                if (controller.text == 'chimes1991') {
+                  Navigator.pop(context);
+                  onSuccess();
+                } else {
+                  setDialogState(() {
+                    showError = true;
+                  });
+                }
+              },
+              child: Text(AppStrings.submitBtn),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   double _getBlurValue() {
-    int effectiveSteps = isDebugMode ? debugSteps.toInt() : currentSteps;
+    int rawSteps = isDebugMode ? debugSteps.toInt() : currentSteps;
+    int effectiveSteps = rawSteps % stepGoal;
     double progress = (effectiveSteps / stepGoal).clamp(0.0, 1.0);
     double blur = 20 * (1 - progress);
     return blur.clamp(0.0, 20.0);
@@ -224,7 +272,8 @@ class _StepTrackerScreenState extends State<StepTrackerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    int displaySteps = isDebugMode ? debugSteps.toInt() : currentSteps;
+    int rawSteps = isDebugMode ? debugSteps.toInt() : currentSteps;
+    int displaySteps = rawSteps % stepGoal;
     double blur = _getBlurValue();
     double progress = (displaySteps / stepGoal).clamp(0.0, 1.0);
 
@@ -428,11 +477,13 @@ class _StepTrackerScreenState extends State<StepTrackerScreen> {
     return PopupMenuButton<String>(
       icon: const Icon(Icons.settings),
       onSelected: (value) {
-        if (value == 'goal') {
-          _showSetGoalDialog();
-        } else if (value == 'image') {
-          _pickRewardImage();
-        }
+        _showPasswordDialog(() {
+          if (value == 'goal') {
+            _showSetGoalDialog();
+          } else if (value == 'image') {
+            _pickRewardImage();
+          }
+        });
       },
       itemBuilder: (context) => [
         PopupMenuItem(
@@ -492,7 +543,7 @@ class _StepTrackerScreenState extends State<StepTrackerScreen> {
                   child: Slider(
                     value: debugSteps,
                     min: 0,
-                    max: stepGoal.toDouble(),
+                    max: stepGoal * 2.0,
                     onChanged: (value) {
                       setState(() {
                         debugSteps = value;

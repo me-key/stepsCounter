@@ -40,7 +40,7 @@ void main() {
         // Verify that our step tracker shows steps.
         expect(find.text('0'), findsOneWidget);
         // Since default is Hebrew
-        expect(find.text('יעד יומי: 10000'), findsOneWidget);
+        expect(find.text('יעד שבועי: 10000'), findsOneWidget);
       },
       createHttpClient: (SecurityContext? context) {
          return MockHttpClient();
